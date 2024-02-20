@@ -139,7 +139,10 @@ print("Done set up")
 # -------------- start main experiment loop ------------------------------------
 input("Press enter to continue to first block ... ")
 for block in range(len(ExpBlocks)):
-    condition = lib.read_trial_data("Trials.xlsx", ExpBlocks[block])
+    if (participant % 2) == 0:
+        condition = lib.read_trial_data("Trials_forward.xlsx", ExpBlocks[block])
+    else:
+        condition = lib.read_trial_data("Trials_backward.xlsx", ExpBlocks[block])
     file_ext = ExpBlocks[block]
 
     # Summary data dictionaries for this block
