@@ -130,7 +130,7 @@ target = visual.Rect(
     win,
     width=lib.cm_to_pixel(target_size),
     height=lib.cm_to_pixel(60),
-    lineColor="red",
+    lineColor="green",
     fillColor=None,
 )
 
@@ -199,7 +199,7 @@ for block in range(len(ExpBlocks)):
             current_pos = [lib.exp_filt(current_pos[0], new_pos), 0]
             if current_pos[0] > home_range_lower and current_pos[0] < home_range_upper:
                 in_home_timer.reset()
-                home_indicator.color = "green"
+                home_indicator.color = "yellow"
                 home_indicator.draw()
                 win.flip()
                 # print("cursor in home position")
