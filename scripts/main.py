@@ -71,9 +71,9 @@ if ExpBlocks[0] == "practice":
         """
         )
         ans = input("Would you like to overwrite this data? (y/n)")
-        if ans.lower() == 'y':
+        if ans.lower() == "y":
             print("Continuing with program")
-        elif ans.lower() == 'n':
+        elif ans.lower() == "n":
             exit()
 
 # set up file path
@@ -139,7 +139,10 @@ print("Done set up")
 # -------------- start main experiment loop ------------------------------------
 input("Press enter to continue to first block ... ")
 for block in range(len(ExpBlocks)):
-    condition = lib.read_trial_data("Trials.xlsx", ExpBlocks[block])
+    if (participant % 2) == 0:
+        condition = lib.read_trial_data("Trials_forward.xlsx", ExpBlocks[block])
+    else:
+        condition = lib.read_trial_data("Trials_backward.xlsx", ExpBlocks[block])
     file_ext = ExpBlocks[block]
 
     # Summary data dictionaries for this block
@@ -202,11 +205,10 @@ for block in range(len(ExpBlocks)):
                 break
 
         # randomly delay trial start
-        rand_wait = np.random.randint(1500, 2500)
+        rand_wait = np.random.randint(500, 800)
         current_trial["trial_delay"].append(rand_wait / 1000)
         block_data["trial_delay"].append(rand_wait / 1000)
         trial_delay_clock.reset()
-        print(f"rand delay is {rand_wait / 1000} seconds")
         while trial_delay_clock.getTime() < (rand_wait / 1000):
             continue
 
@@ -279,7 +281,6 @@ for block in range(len(ExpBlocks)):
             velocities.append(current_vel)
 
             # Save position data
-
 
             if np.mean(velocities[-20:]) < 0.05 and current_time > rt + 0.3:
                 position_data["move_index"].append(1)
@@ -371,7 +372,7 @@ for block in range(len(ExpBlocks)):
         current_trial["curs_end_cm"].append(final_cm_curs)
         current_trial["curs_end_deg"].append(final_deg_curs)
 
-        current_trial['mean_velocity'].append(mean_velocity)
+        current_trial["mean_velocity"].append(mean_velocity)
         current_trial["error"].append(final_deg_curs - target_amp_degree)
         current_trial["block"].append(ExpBlocks[block])
         current_trial["target_cm"].append(target_amplitude)
@@ -405,7 +406,7 @@ for block in range(len(ExpBlocks)):
         block_data["curs_end_cm"].append(final_cm_curs)
         block_data["curs_end_deg"].append(final_deg_curs)
 
-        block_data['mean_velocity'].append(mean_velocity)    
+        block_data["mean_velocity"].append(mean_velocity)
         block_data["error"].append(final_deg_curs - target_amp_degree)
         block_data["block"].append(ExpBlocks[block])
         block_data["target_cm"].append(target_amplitude)
