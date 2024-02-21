@@ -13,9 +13,9 @@ import os
 # make sure the strings match the names of the sheets in the excel
 
 # For testing a few trials
-ExpBlocks = ["practice"]
+# ExpBlocks = ["practice"]
 # ExpBlocks = ["baseline", "main", "post"]
-# ExpBlocks = ["Testing"]
+ExpBlocks = ["Testing"]
 
 # ----------- Participant info ----------------
 
@@ -297,7 +297,9 @@ for block in range(len(ExpBlocks)):
 
         output_task.write([False, False])
         # Append trial data to storage variables
+
         if condition.terminal_feedback[i]:
+            lib.set_position(lib.offset_cursor(int_cursor, condition.offset[i]), int_cursor)
             int_cursor.color = "Green"
             int_cursor.draw()
             target.draw()
@@ -345,7 +347,7 @@ for block in range(len(ExpBlocks)):
         print(f"Trial {i+1} done.")
         print(f"Movement time: {round(((final_time)*1000),1)} ms")
         print(
-            f"Target position: {round(target_amp_degree, 3)} deg    Cursor Position: {round(final_deg_curs,3)} deg"
+            f"Target position: {round(target_amp_degree, 3)} deg - Arm position: {round(final_deg_elbow, 3)} - Cursor Position: {round(final_deg_curs,3)} deg"
         )
         print(f"Error: {round(final_deg_curs - target_amp_degree, 3)} deg")
         print(f"Velocity: {round(mean_velocity, 2)}")

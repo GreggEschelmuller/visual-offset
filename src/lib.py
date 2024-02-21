@@ -6,7 +6,6 @@ The experiment is coded in psychopy. The functions and code were written by Greg
 import numpy as np
 import pandas as pd
 import nidaqmx
-from daqmx import NIDAQmxInstrument
 
 # 24 inch diag - resololution 1920x1080
 # 0.596736 m arc length
@@ -90,12 +89,25 @@ def volt_to_pix(data):
 def volt_to_deg(volt):
     return -69.366*volt + 364.26
 
+
+def deg_to_volt(deg):
+    deg -= 364.26
+    deg /= 69.366
+    return deg
+
+
 def pixel_to_deg(data):
     # data *= 0.0268
     # data += 119.1
     data = pixel_to_volt(data)
     data = volt_to_deg(data)
     return data
+
+
+def deg_to_pix(data):
+    data /=0.0266
+    return data
+
 
 def cm_to_deg(data):
     data = cm_to_pixel(data)
@@ -136,6 +148,10 @@ def contains(small_circ, large_circ):
     )
     return (d + small_circ.radius) < large_circ.radius
 
+
+def offset_cursor(object, offset=0):
+    offset = deg_to_pix(offset)
+    return [object.pos[0] + offset, 0]
 
 def set_position(pos, object):
     object.pos = pos
