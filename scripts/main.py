@@ -14,14 +14,18 @@ import os
 
 # For testing a few trials
 # ExpBlocks = ["practice"]
-# ExpBlocks = ["baseline", "main", "post"]
-ExpBlocks = ["Testing"]
+ExpBlocks = ["tf_baseline",
+             "nf_baseline", 
+             "main", 
+             "nf_post",
+             "tf_post"]
+# ExpBlocks = ["Testing"]
 
 # ----------- Participant info ----------------
 
 # For clamp and rotation direction
 rot_direction = 1  # 1 for forwrad, -1 for backward
-participant = 99
+participant = 98
 
 
 study_id = "Wrist Visuomotor Rotation"
@@ -206,7 +210,7 @@ for block in range(len(ExpBlocks)):
                 break
 
         # randomly delay trial start
-        rand_wait = np.random.randint(500, 800)
+        rand_wait = np.random.randint(900, 1300)
         current_trial["trial_delay"].append(rand_wait / 1000)
         block_data["trial_delay"].append(rand_wait / 1000)
         trial_delay_clock.reset()
@@ -216,7 +220,7 @@ for block in range(len(ExpBlocks)):
         if not condition.full_feedback[i]:
             int_cursor.color = "None"
         elif condition.full_feedback[i]:
-            int_cursor.color = "Green"
+            int_cursor.color = "White"
 
         # Start vibration
         output_task.write(vib_output)
@@ -302,7 +306,7 @@ for block in range(len(ExpBlocks)):
 
         if condition.terminal_feedback[i]:
             lib.set_position(lib.offset_cursor(int_cursor, condition.offset[i]), int_cursor)
-            int_cursor.color = "Green"
+            int_cursor.color = "White"
             int_cursor.draw()
             target.draw()
             win.flip()

@@ -20,7 +20,7 @@ int_cursor = visual.Rect(
     win,
     width=lib.cm_to_pixel(cursor_size),
     height=lib.cm_to_pixel(60),
-    fillColor="green",
+    fillColor="white",
 )
 timer = core.Clock()
 
